@@ -1,0 +1,22 @@
+<% if user_signed_in? %>
+
+<div>hey <%= current_user&.name %></div>
+<br>
+<h1>Users online</h1>
+
+<ul id="online-users">
+  <%= render partial: "pages/user", collection: User.online, as: :user %>
+</ul>
+
+<%= form_with(url: rooms_create_url, remote: true, class: "d-flex",id: "new_message" ) do |f| %>
+  <%= f.text_field :name, class: "form-control", autocomplete: 'off',id: "message_content" %>
+  <%= f.submit data: { disable_with: false } %>
+<% end %>
+<br>
+
+<div id="rooms">
+    <%= render @rooms %>
+</div>
+
+
+<% end %>
