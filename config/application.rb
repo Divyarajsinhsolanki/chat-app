@@ -11,7 +11,7 @@ module Chat
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
-    config.hosts << "a9b2-180-211-108-182.in.ngrok.io"
+    config.hosts << "3845-180-211-108-182.in.ngrok.io"
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

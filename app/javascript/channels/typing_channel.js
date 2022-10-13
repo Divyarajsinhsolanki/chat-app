@@ -16,7 +16,11 @@ consumer.subscriptions.create("TypingChannel", {
     } else {
       if (box.textContent.includes(data.body)) {
       } else {
-        $('#typing-'+data.id).append('<p>'+ data.body + data.message +'</p>');
+        if (box.textContent.includes('Typing')){
+        }
+        else{
+          $('#typing-'+data.id).append('<p>'+ data.body + data.message +'</p>');
+        }
       }
     }
   }
