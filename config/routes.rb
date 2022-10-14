@@ -10,8 +10,8 @@ Rails.application.routes.draw do
 
   get 'pages/path'
   resources :rooms do
-  get 'rtm', action: :rtm, on: :collection
-  get 'rmm', action: :rmm, on: :collection
+  get 'stoptyping', action: :stoptyping, on: :collection
+  get 'typingstatus', action: :typingstatus, on: :collection
     member do
       get :show
     end

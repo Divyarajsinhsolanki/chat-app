@@ -10,12 +10,13 @@ class MessageBroadcastJob < ApplicationJob
   def render_message(message)
     if message.room.messages.count > 1
       if message.room.messages[-2].user.id == message.user.id 
-        MessagesController.render partial: 'messages/message', locals: { message: message }
+        sameuser = false
       else
-        MessagesController.render partial: 'messages/msg', locals: { message: message }
+        sameuser = true
       end
     else
-      MessagesController.render partial: 'messages/msg', locals: { message: message }
+      sameuser = true
     end
+    MessagesController.render partial: 'messages/message', locals: { message: message, sameuser: sameuser}
   end
 end

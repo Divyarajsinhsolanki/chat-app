@@ -10,7 +10,7 @@ class RoomsController < ApplicationController
     @rooms = Room.all
   end
 
-  def rtm
+  def stoptyping
     ActionCable.server.broadcast "typing_channel",{user_id: "#{current_user.id}",id: "#{params[:room]}",message: ' is Typing', body: "#{current_user.name}"}
     respond_to do |format|
       format.html 
@@ -18,7 +18,7 @@ class RoomsController < ApplicationController
     end
   end
 
-  def rmm
+  def typingstatus
     ActionCable.server.broadcast "styping_channel", {user_id: "#{current_user.id}",id: "#{params[:room]}",message: "", body: "#{current_user.name}"}
     respond_to do |format|
       format.html 

@@ -14,17 +14,15 @@
   </div>
 <% end %>
 
-  <br><span style="margin: 0 10px">Room-</span><%= @room.name %><br><br>
+<br><span style="margin: 0 10px">Room-</span><%= @room.name %><br><br>
 
   <div id="messages">
-  <% a = -1 %>
-  <% @messages.each do |message| %>
-    <% if message.room.messages[a].user.id == message.user.id && a != -1 %>
-      <%= render partial: 'messages/message',locals: { message: message } %>
+  <% @messages.each_with_index do |message, index| %>
+    <% if message.room.messages[index - 1].user.id == message.user.id && index != -1 %>
+      <%= render partial: 'messages/message',locals: { message: message ,sameuser: false} %>
     <% else %>
-      <%= render partial: 'messages/msg',locals: { message: message } %>
+    <%= render partial: 'messages/message',locals: { message: message, sameuser: true } %>
     <% end %>
-    <% a = a + 1 %>
   <% end %>
     <%#= render @messages %>
   </div>
@@ -48,7 +46,7 @@ $(document).ready(function(){
   $("#chat").on("input", function(){
      $.ajax({
       type: 'GET',
-      url: '/rooms/rtm',
+      url: '/rooms/stoptyping',
       data: {"room":"<%= @room.id %>"},
     });
     if (tmo) {
@@ -57,7 +55,7 @@ $(document).ready(function(){
     tmo = setTimeout(function () {
       $.ajax({
         type: 'GET',
-        url: '/rooms/rmm',
+        url: '/rooms/typingstatus',
         data: {"room":"<%= @room.id %>"},
     });
     }, 700);
