@@ -17,6 +17,7 @@ class MessageBroadcastJob < ApplicationJob
     else
       sameuser = true
     end
+    room_id = message.room.id
     MessagesController.render partial: 'messages/message', locals: { message: message, sameuser: sameuser}
   end
 end

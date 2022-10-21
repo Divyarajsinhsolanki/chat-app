@@ -5,6 +5,7 @@
     <%= render partial: "pages/user", collection: User.online, as: :user %>
   </ul>
 
+  <%#= render partial: "pages/users" %>
   <%= form_with(url: rooms_create_url, remote: true, class: "d-flex" ) do |f| %>
     <%= f.text_field :name, class: "form-control",id: "chat_text", autocomplete: 'off' %>
     <%= f.submit data: { disable_with: false } %>
@@ -12,23 +13,15 @@
   <br><div id="rooms">
     <%= render @rooms %>
   </div>
+
+
+  
 <% end %>
 
 <br><span style="margin: 0 10px">Room-</span><%= @room.name %><br><br>
 
-  <div id="messages">
-  <% @messages.each_with_index do |message, index| %>
-    <% if message.room.messages[index - 1].user.id == message.user.id && index != -1 %>
-      <%= render partial: 'messages/message',locals: { message: message ,sameuser: false} %>
-    <% else %>
-    <%= render partial: 'messages/message',locals: { message: message, sameuser: true } %>
-    <% end %>
-  <% end %>
-    <%#= render @messages %>
-  </div>
-
-<div id="typing-<%=@room.id%>">
-  <span style="opacity:0;"><%=current_user.id%></span>
+<div id="allmessages">
+  <%= render partial: "messages/messages" %>
 </div>
 
   <div class="form-group msg-form">
@@ -40,7 +33,56 @@
     <% end %>
   </div>
 
+
+  <hr>
+
+<span id="current-user"><%=  current_user.id %></span>
+  
+<button id="join-button">Join Room</button>
+<button id="leave-button">Leave Room</button>
+<button onclick="vidOff()" id="onvideo">Off</button>
+<button onclick="vidOn()" id="offvideo">On Video</button><br>
+<div id="remote-video-container"></div>
+<video id="localvideo" autoplay></video><hr/>
+<hr>
+
+
+
+
 <script>
+let localstream;
+
+      navigator.webkitGetUserMedia(options, function(stream) { 
+      localvideo.srcObject = stream;
+      localstream = stream;
+      localvideo.play();
+      }, function(e) { 
+          }); 
+  function vidOff() {
+    console.log("video off")
+      //clearInterval(theDrawLoop);
+      //ExtensionData.vidStatus = 'off';
+      localvideo.pause();
+      localvideo.src = "";
+      localstream.getTracks()[0].stop();
+  }
+
+
+  function vidOn() {
+  if (navigator.mediaDevices.getUserMedia !== null) {
+    var options = { 
+    video:true, 
+    audio:false 
+    };  
+    navigator.webkitGetUserMedia(options, function(stream) { 
+    localvideo.srcObject = stream;
+    localstream = stream;
+    localvideo.play();
+    }, function(e) { 
+        }); 
+    }
+  }
+
 $(document).ready(function(){
   var tmo = null;
   $("#chat").on("input", function(){
