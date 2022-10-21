@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'chats/new'
+  get 'chats/create'
+  post 'chats/start'
+  get 'chats/video'
+  get 'chats/index'
   mount ActionCable.server => '/cable'
   get 'messages/new'
   post 'messages/create'
@@ -16,8 +21,10 @@ Rails.application.routes.draw do
       get :show
     end
   end
+  post 'rooms/start'
 
 
+  
   devise_scope :user do
     get "users", to: "devise/sessions#new"
   end

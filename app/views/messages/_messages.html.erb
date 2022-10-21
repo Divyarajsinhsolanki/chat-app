@@ -1,0 +1,13 @@
+<% @messages.each_with_index do |message, index| %>
+  <div id="messages">
+    <% if message.room.messages[index - 1].user.id == message.user.id && index != 0 %>
+      <%= render partial: 'messages/message',locals: { message: message ,sameuser: false} %>
+    <% else %>
+      <%= render partial: 'messages/message',locals: { message: message, sameuser: true } %>
+    <% end %>
+  </div>
+<% end %>
+
+<div id="typing-<%=@room.id%>">
+  <span style="opacity:0;"><%=current_user.id%></span>
+</div>
