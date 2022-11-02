@@ -4,6 +4,7 @@ class ChatsController < ApplicationController
 
 
   def video
+    @localuser = params[:user_id]
   end
   
   def index
@@ -15,6 +16,6 @@ class ChatsController < ApplicationController
 
   private
     def session_params
-      params.require(:chat).permit(:type, :from, :to, :sdp, :candidate)
+      params.require(:chat).permit(:type, :from, :to, :sdp, :candidate, :room, :receiver)
     end
 end

@@ -8,7 +8,6 @@ consumer.subscriptions.create("RoomChannel", {
   },
   
   received(data) {
-  console.log(data)
     $('#allmessages').append(data.message)
     window.scrollTo(0,document.body.scrollHeight);
   }
