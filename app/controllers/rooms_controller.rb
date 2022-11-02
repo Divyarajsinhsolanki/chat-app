@@ -1,8 +1,10 @@
 class RoomsController < ApplicationController
-  # def create
-  #   @room = Room.create(name: params[:name])
-  #   redirect_back(fallback_location: root_path)
-  # end
+
+
+  def create
+    @room = Room.create(name: params[:name])
+    redirect_back(fallback_location: root_path)
+  end
 
   def video
     head :no_content

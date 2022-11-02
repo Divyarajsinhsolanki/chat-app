@@ -154,7 +154,7 @@ const createPC = (userId,receiveruser, isOffer) => {
 };
 
 const handleLeaveSession = () => {
-  location.reload();
+  // location.reload();
   
   document.getElementById("join-button").style.display = "inline";
   document.getElementById("leave-button").style.display = "none";
@@ -165,7 +165,7 @@ const handleLeaveSession = () => {
   pcPeers = {};
 
   remoteVideoContainer.innerHTML = "";
-  
+
   broadcastData({
     type: REMOVE_USER,
     from: caller,
