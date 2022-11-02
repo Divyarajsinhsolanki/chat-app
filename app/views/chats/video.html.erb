@@ -1,14 +1,14 @@
 <%= User.find(@localuser).name %>
 <% if User.online.include? User.find(@localuser) %>
-  <div style="color:green; "><%=  "online" %></div>
+  <div id="<%= @localuser %>" style="color:green; "><%=  "online" %></div>
   <button id="join-button">Start Call</button>
 <% else %>
-  <div style="color:red; "><%=  "offline" %></div>
+  <div id="<%= @localuser %>" style="color:red; "><%=  "offline" %></div>
+  <button style="display:none;" id="join-button">Start Call</button>
+
 <% end %>
 
-<div id="<%= @localuser %>" style="color:green;display:none; "><%=  "online" %></div>
-
-
+<div  style="color:green;display: none; "><%=  "online" %></div>
 
 <br>user id:-<span id="currentuser"><%= @localuser %></span>
 caller id:-<span id="calleruser"><%= current_user.id %></span><br>
@@ -22,6 +22,18 @@ caller id:-<span id="calleruser"><%= current_user.id %></span><br>
 <button style="display: none" onclick="vidOff()" id="offvideo">Off Video</button>
 <button style="display: none" onclick="vidOn()" id="onvideo">On Video</button><br>
 
+
+<div id="allmessages">
+  <%= render partial: "messages/messages" %>
+</div>
+<div class="form-group msg-form">
+  <%= form_with(url: messages_create_url, class: "d-flex",data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }) do |f| %>
+    <%= f.hidden_field :room_id, value: "#{@single_room.id}" %>
+    <%= f.text_field :content, id: 'chat', class: "form-control msg-content", autocomplete: 'off' %>
+    <%= f.file_field :photo %>
+    <%= f.submit data: { disable_with: false }, class: "btn btn-primary" %>
+  <% end %>
+</div>
 
 
 <script>

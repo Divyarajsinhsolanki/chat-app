@@ -11,6 +11,7 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
+
   # Show full error reports.
   config.consider_all_requests_local = true
 
@@ -38,7 +39,8 @@ Rails.application.configure do
 
   # config.asset_host = "http://3845-180-211-108-182.in.ngrok.io"
   # Rails.application.routes.default_url_options[:host] = 'localhost:3000'
-  config.action_controller.default_url_options = {host: 'localhost', port: 3000 }
+
+  # config.action_controller.default_url_options = {host: 'localhost', port: 3000 }
 
 
   # Don't care if the mailer can't send.

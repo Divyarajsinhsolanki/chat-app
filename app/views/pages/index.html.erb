@@ -15,16 +15,17 @@
     <%= render partial: "pages/user", collection: User.online, as: :user %>
   </ul>
 
-  <%= link_to "video room", chats_index_path, class: "btn btn-primary" %>
+  <%#= link_to "video room", chats_index_path, class: "btn btn-primary" %>
 
-  <%= form_with(url: rooms_create_url, remote: true, class: "d-flex",id: "new_message" ) do |f| %>
-    <%= f.text_field :name, class: "form-control", autocomplete: 'off',id: "message_content" %>
-    <%= f.submit data: { disable_with: false } %>
-  <% end %><br>
+  <%#= form_with(url: rooms_create_url, remote: true, class: "d-flex",id: "new_message" ) do |f| %>
+    <%#= f.text_field :name, class: "form-control", autocomplete: 'off',id: "message_content" %>
+    <%#= f.submit data: { disable_with: false } %>
+  <%# end %><br>
 
   <div id="rooms">
-    <%= render @rooms %>
+    <%#= render @rooms %>
   </div>
 
-  
   <% end %>
+<script>
+</script>
