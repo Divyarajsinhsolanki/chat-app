@@ -25,11 +25,11 @@ class RoomsController < ApplicationController
 
   def start
     # ActionCable.server.broadcast "session_channel", session_params
-    ActionCable.server.broadcast "session_channel", {type: "#{params[:type]}",from: "#{params[:from]}",to: "#{params[:to]}",sdp: "#{params[:sdp]}",candidate: "#{params[:candidate]}"}
+    ActionCable.server.broadcast "session_channel", {type: "#{params[:type]}",from: "#{params[:from]}",to: "#{params[:to]}",sdp: "#{params[:sdp]}",candidate: "#{params[:candidate]}",room: "#{params[:room]}"}
   end
 
   private
     def session_params
-      params.require(:room).permit(:type, :from, :to, :sdp, :candidate)
+      params.require(:room).permit(:type, :from, :to, :sdp, :candidate, :room)
     end
 end

@@ -1,11 +1,5 @@
 <% if user_signed_in? %>
-  <div>hey <%= current_user&.name %></div>
-  <h1>Users online</h1>
-  <ul id="online-users">
-    <%= render partial: "pages/user", collection: User.online, as: :user %>
-  </ul>
-
-  <%#= render partial: "pages/users" %>
+  <div><strong>hey</strong> <%= current_user&.name %></div>
   <%= form_with(url: rooms_create_url, remote: true, class: "d-flex" ) do |f| %>
     <%= f.text_field :name, class: "form-control",id: "chat_text", autocomplete: 'off' %>
     <%= f.submit data: { disable_with: false } %>
@@ -14,8 +8,6 @@
     <%= render @rooms %>
   </div>
 
-
-  
 <% end %>
 
 <br><span style="margin: 0 10px">Room-</span><%= @room.name %><br><br>
@@ -24,47 +16,47 @@
   <%= render partial: "messages/messages" %>
 </div>
 
-  <div class="form-group msg-form">
-    <%= form_with(url: messages_create_url, class: "d-flex",data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }) do |f| %>
-      <%= f.hidden_field :room_id, value: "#{@room.id}" %>
-      <%= f.text_field :content, id: 'chat', class: "form-control msg-content", autocomplete: 'off' %>
-      <%= f.file_field :photo %>
-      <%= f.submit data: { disable_with: false }, class: "btn btn-primary" %>
-    <% end %>
-  </div>
+<div class="form-group msg-form">
+  <%= form_with(url: messages_create_url, class: "d-flex",data: { controller: "reset-form", action: "turbo:submit-end->reset-form#reset" }) do |f| %>
+    <%= f.hidden_field :room_id, value: "#{@room.id}" %>
+    <%= f.text_field :content, id: 'chat', class: "form-control msg-content", autocomplete: 'off' %>
+    <%= f.file_field :photo %>
+    <%= f.submit data: { disable_with: false }, class: "btn btn-primary" %>
+  <% end %>
+</div>
 
 
-  <hr>
+<hr>Room id:-<span id="currentuser"><%=  @room.id %></span>
+User id:-<span id="calleruser"><%= current_user.id %></span><hr>
 
-<span id="current-user"><%=  current_user.id %></span>
-  
-<button id="join-button">Join Room</button>
-<button id="leave-button">Leave Room</button>
-<button onclick="vidOff()" id="onvideo">Off</button>
+
+<button id="join-button">Join Call</button>
+<button id="leave-button">Leave Call</button>
+
+<button onclick="vidOff()" id="onvideo">Off Video</button>
 <button onclick="vidOn()" id="offvideo">On Video</button><br>
-<div id="remote-video-container"></div>
-<video id="localvideo" autoplay></video><hr/>
-<hr>
 
-
+<video  style="width:200px; height:200px;" id="localvideo" autoplay></video>
+<span id="remote-video-container"></span>
 
 
 <script>
-let localstream;
+  let localstream;
 
-      navigator.webkitGetUserMedia(options, function(stream) { 
-      localvideo.srcObject = stream;
-      localstream = stream;
-      localvideo.play();
-      }, function(e) { 
-          }); 
+  navigator.webkitGetUserMedia(options, function(stream) { 
+    localvideo.srcObject = stream;
+    localstream = stream;
+    localvideo.play();
+    }, function(e) { 
+        }); 
   function vidOff() {
     console.log("video off")
-      //clearInterval(theDrawLoop);
-      //ExtensionData.vidStatus = 'off';
-      localvideo.pause();
-      localvideo.src = "";
-      localstream.getTracks()[0].stop();
+    //clearInterval(theDrawLoop);
+    //ExtensionData.vidStatus = 'off';
+    localvideo.pause();
+    localvideo.src = "";
+    localstream.getTracks()[0].stop();
+    localstream.getTracks()[1].stop();
   }
 
 
@@ -72,7 +64,7 @@ let localstream;
   if (navigator.mediaDevices.getUserMedia !== null) {
     var options = { 
     video:true, 
-    audio:false 
+    audio:true 
     };  
     navigator.webkitGetUserMedia(options, function(stream) { 
     localvideo.srcObject = stream;
@@ -83,24 +75,24 @@ let localstream;
     }
   }
 
-$(document).ready(function(){
-  var tmo = null;
-  $("#chat").on("input", function(){
-     $.ajax({
-      type: 'GET',
-      url: '/rooms/stoptyping',
-      data: {"room":"<%= @room.id %>"},
-    });
-    if (tmo) {
-      clearTimeout(tmo);
-    }
-    tmo = setTimeout(function () {
+  $(document).ready(function(){
+    var tmo = null;
+    $("#chat").on("input", function(){
       $.ajax({
         type: 'GET',
-        url: '/rooms/typingstatus',
+        url: '/rooms/stoptyping',
         data: {"room":"<%= @room.id %>"},
+      });
+      if (tmo) {
+        clearTimeout(tmo);
+      }
+      tmo = setTimeout(function () {
+        $.ajax({
+          type: 'GET',
+          url: '/rooms/typingstatus',
+          data: {"room":"<%= @room.id %>"},
+      });
+      }, 700);
     });
-    }, 700);
   });
-});
 </script>

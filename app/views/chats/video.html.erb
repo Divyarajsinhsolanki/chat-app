@@ -1,2 +1,39 @@
-<h1>Chats#video</h1>
-<p>Find me in app/views/chats/video.html.erb</p>
+<%= User.find(@localuser).name %>
+<% if User.online.include? User.find(@localuser) %>
+  <div style="color:green; "><%=  "online" %></div>
+  <button id="join-button">Start Call</button>
+<% else %>
+  <div style="color:red; "><%=  "offline" %></div>
+<% end %>
+
+<div id="<%= @localuser %>" style="color:green;display:none; "><%=  "online" %></div>
+
+
+
+<br>user id:-<span id="currentuser"><%= @localuser %></span>
+caller id:-<span id="calleruser"><%= current_user.id %></span><br>
+
+<button style="display: none" id="leave-button">Leave Call</button>
+
+
+<video style="width:300px;" id="localvideo" autoplay></video>
+<span id="remote-video-container"></span>
+
+<button style="display: none" onclick="vidOff()" id="offvideo">Off Video</button>
+<button style="display: none" onclick="vidOn()" id="onvideo">On Video</button><br>
+
+
+
+<script>
+  let localstream;
+  
+  function vidOff() {
+    localstream.getTracks()[0].enabled = false;
+    localstream.getTracks()[1].enabled = false;
+  }
+
+  function vidOn() {
+    localstream.getTracks()[0].enabled = true;
+    localstream.getTracks()[1].enabled = true;
+  }
+</script>

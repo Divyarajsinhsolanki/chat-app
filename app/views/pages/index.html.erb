@@ -1,6 +1,14 @@
 <% if user_signed_in? %>
 
-  <div>hey <%= current_user&.name %></div><br>
+  <div><strong>hey</strong> <%= current_user&.name %></div>
+
+  <% User.all.each do |user| %>
+    <% unless user == current_user %>
+      <span style="margin:10px;"><%= link_to user.name , chats_video_path(user_id: user.id), method: :get  ,class: "btn btn-primary" %></span>
+    <% end %>
+  <% end %>
+
+    
   <h1>Users online</h1>
 
   <ul id="online-users">

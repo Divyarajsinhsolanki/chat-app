@@ -1,14 +1,13 @@
 <hr>
 
-<span id="current-user"><%=  current_user.id %></span>
+<span id="currentuser"><%=  current_user.id %></span>
   
-<button id="join-button">Join Room</button>
-<button id="leave-button">Leave Room</button>
+<button id="join-button">Join Call</button>
+<button id="leave-button">Leave Call</button>
 <button onclick="vidOff()" id="onvideo">Off</button>
 <button onclick="vidOn()" id="offvideo">On Video</button><br>
 <div id="remote-video-container"></div>
-<video id="localvideo" autoplay></video><hr/>
-<hr>
+<video id="localvideo" autoplay></video><hr>
 
 
 
@@ -30,6 +29,7 @@ let localstream;
       localvideo.pause();
       localvideo.src = "";
       localstream.getTracks()[0].stop();
+      localstream.getTracks()[1].stop();
   }
 
 
@@ -37,7 +37,7 @@ let localstream;
   if (navigator.mediaDevices.getUserMedia !== null) {
     var options = { 
     video:true, 
-    audio:false 
+    audio:true 
     };  
     navigator.webkitGetUserMedia(options, function(stream) { 
     localvideo.srcObject = stream;
