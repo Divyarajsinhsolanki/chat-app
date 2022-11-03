@@ -139,7 +139,7 @@ const createPC = (userId,receiveruser, isOffer) => {
       element.srcObject = inboundStream;
     }
   };
-  
+
   pc.oniceconnectionstatechange = () => {
     if (pc.iceConnectionState == "disconnected") {
       console.log("Disconnected:", userId);
@@ -155,9 +155,13 @@ const createPC = (userId,receiveruser, isOffer) => {
 
 const handleLeaveSession = () => {
   // location.reload();
-  
+
   document.getElementById("join-button").style.display = "inline";
   document.getElementById("leave-button").style.display = "none";
+  document.getElementById("onvideo").style.display = "none";
+  document.getElementById("offvideo").style.display = "none";
+  localstream.getTracks()[0].enabled = false;
+  localstream.getTracks()[1].enabled = false;
 
   for (let user in pcPeers) {
     pcPeers[user].close();
@@ -182,7 +186,7 @@ const removeUser = (data) => {
 
 const exchange = (data) => {
   let pc;
-  
+
   if (!pcPeers[data.from]) {
     pc = createPC(data.from, false);
   } else {
@@ -194,7 +198,7 @@ const exchange = (data) => {
     .then(() => console.log("Ice candidate added"))
     .catch(logError);
   }
-  
+
   if (data.sdp) {
     const sdp = JSON.parse(data.sdp);
     pc.setRemoteDescription(new RTCSessionDescription(sdp))
