@@ -18,7 +18,7 @@ default: &default
 
 development:
   <<: *default
-  database: quora_new1_development
+  database: chat_new1_development
 
 
 # development:
@@ -30,8 +30,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: quora_new1_test
+  database: chat_new1_test
 
 production:
   <<: *default
-  database: quora_2_production
+  database: chat_2_production
