@@ -34,4 +34,5 @@ test:
 
 production:
   <<: *default
-  database: chat_2_production
+  database: 
+chat_2_production
