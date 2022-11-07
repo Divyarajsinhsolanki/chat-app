@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'chats/new'
+  get 'chats/create'
+  post 'chats/start'
+  get 'chats/video'
+  get 'chats/index'
   mount ActionCable.server => '/cable'
   get 'messages/new'
   post 'messages/create'
@@ -10,14 +15,16 @@ Rails.application.routes.draw do
 
   get 'pages/path'
   resources :rooms do
-  get 'rtm', action: :rtm, on: :collection
-  get 'rmm', action: :rmm, on: :collection
+  get 'stoptyping', action: :stoptyping, on: :collection
+  get 'typingstatus', action: :typingstatus, on: :collection
     member do
       get :show
     end
   end
+  post 'rooms/start'
 
 
+  
   devise_scope :user do
     get "users", to: "devise/sessions#new"
   end

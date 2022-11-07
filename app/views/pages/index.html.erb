@@ -1,22 +1,31 @@
 <% if user_signed_in? %>
 
-<div>hey <%= current_user&.name %></div>
-<br>
-<h1>Users online</h1>
+  <div><strong>hey</strong> <%= current_user&.name %></div>
 
-<ul id="online-users">
-  <%= render partial: "pages/user", collection: User.online, as: :user %>
-</ul>
+  <% User.all.each do |user| %>
+    <% unless user == current_user %>
+      <span style="margin:10px;"><%= link_to user.name , chats_video_path(user_id: user.id), method: :get  ,class: "btn btn-primary" %></span>
+    <% end %>
+  <% end %>
 
-<%= form_with(url: rooms_create_url, remote: true, class: "d-flex",id: "new_message" ) do |f| %>
-  <%= f.text_field :name, class: "form-control", autocomplete: 'off',id: "message_content" %>
-  <%= f.submit data: { disable_with: false } %>
-<% end %>
-<br>
+    
+  <h1>Users online</h1>
 
-<div id="rooms">
-    <%= render @rooms %>
-</div>
+  <ul id="online-users">
+    <%= render partial: "pages/user", collection: User.online, as: :user %>
+  </ul>
 
+  <%#= link_to "video room", chats_index_path, class: "btn btn-primary" %>
 
-<% end %>
+  <%#= form_with(url: rooms_create_url, remote: true, class: "d-flex",id: "new_message" ) do |f| %>
+    <%#= f.text_field :name, class: "form-control", autocomplete: 'off',id: "message_content" %>
+    <%#= f.submit data: { disable_with: false } %>
+  <%# end %><br>
+
+  <div id="rooms">
+    <%#= render @rooms %>
+  </div>
+
+  <% end %>
+<script>
+</script>

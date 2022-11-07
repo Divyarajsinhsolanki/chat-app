@@ -74,3 +74,6 @@ end
 
 gem "devise", "~> 4.8"
 gem 'bootstrap'
+gem 'activestorage'
+gem 'webrtc-rails'
+gem 'pg'
