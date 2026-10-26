@@ -59,3 +59,9 @@ GitHub Actions runs the existing Rails test suite on pushes and pull requests us
 ## Licence
 
 No licence grant is currently included. Contact the owner before reuse or redistribution.
+
+## CI baseline — 2026-10-26
+
+The workflow reaches the Rails suite: 12 tests report fixture errors because both user fixtures have the same empty email, violating the unique email index. Fix the fixtures and then assess any subsequent failures; this is not yet a passing baseline.
+
+[Inspected test run](https://github.com/Divyarajsinhsolanki/chat-app/actions/runs/40307222475). Adding CI does not imply these legacy projects are production-ready.
